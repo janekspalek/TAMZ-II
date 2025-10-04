@@ -70,6 +70,11 @@ fun App(modifier: Modifier = Modifier) {
         )
 
         Spacer(modifier = Modifier.height(20.dp))
+
+        Graph(deposit, interestOnly)
+
+        Spacer(modifier = Modifier.height(20.dp))
+
         SliderCard(
             deposit,
             onDepositChange = {deposit = it.roundToInt().toFloat()},
@@ -120,16 +125,31 @@ fun Amounts(total: Float, interestOnly: Float) {
 }
 
 @Composable
-fun Graph() {
+fun Graph(deposit: Float, interestOnly: Float) {
     val data: List<BarParameters> = listOf(
         BarParameters(
-            dataName = "sdfsdf",
-            data = listOf(70.0, 00.0, 50.33, 40.0, 100.500, 50.0),
-            barColor = Color.Red
+            dataName = "Vklad",
+            data = listOf(deposit.toDouble()),
+            barColor = Color(0xFF1565C0)
+        ),
+        BarParameters(
+            dataName = "Úroky",
+            data = listOf(interestOnly.toDouble()),
+            barColor = Color(0xFFFFA726)
         )
     )
 
-    BarChart(chartParameters = data)
+    ElevatedCard (modifier = Modifier.fillMaxWidth().height(400.dp)) {
+        Column (modifier = Modifier.padding(20.dp)) {
+            BarChart(
+                chartParameters = data,
+                xAxisData = listOf("Vklad/Uroky",),
+                animateChart = true,
+                barWidth = 130.dp,
+                barCornerRadius = 15.dp
+            )
+        }
+    }
 }
 
 @Composable
