@@ -1,1 +1,1 @@
-![App screenshot](./screenshots/app.png)
+<img src="./screenshots/app.png" width="350" alt="App screenshot">
