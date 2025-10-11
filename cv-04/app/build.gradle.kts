@@ -63,4 +63,7 @@ dependencies {
     // Navigation
     val nav_version = "2.9.5"
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    // Color picker
+    implementation("com.github.skydoves:colorpicker-compose:1.1.2")
 }

@@ -25,15 +25,22 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.cv_04.ChartType
 import com.example.cv_04.MyDropdownMenu
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(onNavigateToSettings: () -> Unit) {
+fun HomeScreen(
+    onNavigateToSettings: () -> Unit,
+    chartType: ChartType,
+    primaryColor: Color,
+    secondaryColor: Color
+) {
     Scaffold(
         modifier = Modifier.safeDrawingPadding(),
         topBar = {
@@ -51,12 +58,17 @@ fun HomeScreen(onNavigateToSettings: () -> Unit) {
             )
         },
     ) { innerPadding ->
-        App(modifier = Modifier.padding(innerPadding))
+        App(modifier = Modifier.padding(innerPadding), chartType, primaryColor, secondaryColor)
     }
 }
 
 @Composable
-fun App(modifier: Modifier = Modifier) {
+fun App(
+    modifier: Modifier = Modifier,
+    chartType: ChartType,
+    primaryColor: Color,
+    secondaryColor: Color
+) {
     var deposit by remember { mutableFloatStateOf(1000f) }
     var interest by remember { mutableFloatStateOf(10f) }
     var years by remember { mutableFloatStateOf(5f) }
@@ -74,7 +86,10 @@ fun App(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Graph(deposit, interestOnly)
+        when(chartType) {
+            ChartType.BAR -> BarGraph(deposit, interestOnly, primaryColor, secondaryColor);
+            ChartType.PIE -> PieGraph(deposit, interestOnly, primaryColor, secondaryColor);
+        }
 
         Spacer(modifier = Modifier.height(20.dp))
 

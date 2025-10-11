@@ -1,6 +1,9 @@
 package com.example.cv_04.settings
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,8 +11,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -23,17 +28,27 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.cv_04.ChartType
+import com.github.skydoves.colorpicker.compose.HsvColorPicker
+import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(onNavigateBack: () -> Unit) {
+fun SettingsScreen(
+    onNavigateBack: () -> Unit,
+    currentChart: ChartType,
+    onChartSelected: (ChartType) -> Unit,
+    primaryColor: Color,
+    onPrimaryColorChange: (Color) -> Unit,
+    secondaryColor: Color,
+    onSecondaryColorChange: (Color) -> Unit,
+) {
     Scaffold (
         modifier = Modifier.safeDrawingPadding(),
         topBar = {
@@ -58,52 +73,11 @@ fun SettingsScreen(onNavigateBack: () -> Unit) {
                 .padding(innerPadding)
                 .padding(20.dp)
         ) {
-            val radioOptions = listOf("BarChart", "PieChart")
-            val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
+            GraphType(onChartSelected, currentChart)
 
-            Text("Typ grafu",
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.SemiBold
-            )
-
-            Column(Modifier.selectableGroup()) {
-                radioOptions.forEach { text ->
-                  Row ( Modifier
-                      .fillMaxWidth()
-                      .height(50.dp)
-                      .selectable(
-                          selected = (text == selectedOption),
-                          onClick = { onOptionSelected(text) },
-                          role = Role.RadioButton
-                      )
-                      .padding(horizontal = 8.dp),
-                      verticalAlignment = Alignment.CenterVertically,
-                      horizontalArrangement = Arrangement.SpaceBetween,
-
-                  ) {
-                      Text(
-                          text = text,
-                          style = MaterialTheme.typography.bodyLarge,
-                          modifier = Modifier.padding(start = 16.dp)
-                      )
-                      RadioButton(
-                          selected = (text == selectedOption),
-                          onClick = null
-                      )
-                  }
-                }
-            }
-
-            HorizontalDivider()
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text("Barva grafu",
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.SemiBold
-            )
-
-
+            GraphColor(primaryColor, onPrimaryColorChange, secondaryColor, onSecondaryColorChange)
         }
-
     }
 }
