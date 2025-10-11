@@ -17,8 +17,9 @@ import com.example.cv_04.home.HomeScreen
 import com.example.cv_04.settings.SettingsScreen
 import com.example.cv_04.ui.theme.Cv04Theme
 
-enum class ChartType {
-    BAR, PIE
+enum class ChartType(val displayName: String) {
+    BAR("Sloupcový graf"),
+    PIE("Koláčový graf")
 }
 
 class MainActivity : ComponentActivity() {
@@ -29,8 +30,8 @@ class MainActivity : ComponentActivity() {
             Cv04Theme {
                 val navController = rememberNavController();
                 var chartType by remember { mutableStateOf(ChartType.BAR) }
-                var primaryColor by remember { mutableStateOf(Color.Black) }
-                var secondaryColor by remember { mutableStateOf(Color.Black) }
+                var primaryColor by remember { mutableStateOf(Color(0xFF475D92)) }
+                var secondaryColor by remember { mutableStateOf(Color(0xFF575E71)) }
 
                 NavHost(navController = navController, startDestination = "home") {
                     composable ("home") {

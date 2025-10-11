@@ -1,9 +1,19 @@
 package com.example.cv_04.settings
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +21,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,94 +50,123 @@ fun GraphColor(
 ) {
     var showColorPickerPrimary by remember { mutableStateOf(false) }
     var showColorPickerSecondary by remember { mutableStateOf(false) }
+    var primaryInitialized by remember { mutableStateOf(false) }
+    var secondaryInitialized by remember { mutableStateOf(false) }
 
-    Text("Barva grafu",
-        color = MaterialTheme.colorScheme.primary,
-        fontWeight = FontWeight.SemiBold
-    )
-
-    Row (
-        modifier = Modifier.fillMaxWidth()
-            .padding(horizontal = 8.dp)
-            .height(50.dp)
-            .clickable {
-                showColorPickerPrimary = !showColorPickerPrimary;
-                showColorPickerSecondary = false
-            },
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ){
-        Text(
-            "Primarni",
-            modifier = Modifier.padding(start = 16.dp),
-        )
-        Row (verticalAlignment = Alignment.CenterVertically, ){
-            Text(
-                "#${primaryColor.toHex()}"
+    ElevatedCard (modifier = Modifier.fillMaxWidth()) {
+        Column (modifier = Modifier.padding(20.dp)) {
+            Text("Barva grafu",
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.SemiBold
             )
-            Spacer(modifier = Modifier.width(10.dp))
-            Box(
-                modifier = Modifier
-                    .background(primaryColor, shape = CircleShape)
-                    .height(20.dp)
-                    .width(20.dp)
-            )
-        }
-    }
 
-    Row (
-        modifier = Modifier.fillMaxWidth()
-            .padding(horizontal = 8.dp)
-            .height(50.dp)
-            .clickable {
-                showColorPickerSecondary = !showColorPickerSecondary;
-                showColorPickerPrimary = false
-            },
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ){
-        Text(
-            "Sekundarni",
-            modifier = Modifier.padding(start = 16.dp),
-        )
-        Row (verticalAlignment = Alignment.CenterVertically, ){
-            Text(
-                "#${secondaryColor.toHex()}"
-            )
-            Spacer(modifier = Modifier.width(10.dp))
-            Box(
-                modifier = Modifier
-                    .background(secondaryColor, shape = CircleShape)
-                    .height(20.dp)
-                    .width(20.dp)
-            )
-        }
-    }
+            Spacer(modifier = Modifier.height(10.dp))
 
-    if(showColorPickerPrimary) {
-        HsvColorPicker(
-            initialColor = primaryColor,
-            modifier = Modifier.fillMaxWidth()
-                .height(450.dp)
-                .padding(10.dp),
-            controller = rememberColorPickerController(),
-            onColorChanged = {envelope ->
-                onPrimaryColorChange(envelope.color)
-            }
-        )
-    }
-
-    if(showColorPickerSecondary) {
-        HsvColorPicker(
-            initialColor = secondaryColor,
-            modifier = Modifier.fillMaxWidth()
-                .height(450.dp)
-                .padding(10.dp),
-            controller = rememberColorPickerController(),
-            onColorChanged = {envelope ->
-                onSecondaryColorChange(envelope.color)
+            Row (
+                modifier = Modifier.fillMaxWidth()
+                    .height(40.dp)
+                    .clickable {
+                        showColorPickerPrimary = !showColorPickerPrimary;
+                        showColorPickerSecondary = false
+                    },
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text(
+                    "Primární",
+                    modifier = Modifier.padding(start = 10.dp),
+                )
+                Row (
+                    modifier = Modifier.padding(end = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Text(
+                        "#${primaryColor.toHex()}"
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Box(
+                        modifier = Modifier
+                            .background(primaryColor, shape = CircleShape)
+                            .height(20.dp)
+                            .width(20.dp)
+                    )
+                }
             }
 
-        )
+            Row (
+                modifier = Modifier.fillMaxWidth()
+                    .height(40.dp)
+                    .clickable {
+                        showColorPickerSecondary = !showColorPickerSecondary;
+                        showColorPickerPrimary = false
+                    },
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text(
+                    "Sekundární",
+                    modifier = Modifier.padding(start = 10.dp),
+                )
+                Row (
+                    modifier = Modifier.padding(end = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Text(
+                        "#${secondaryColor.toHex()}"
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Box(
+                        modifier = Modifier
+                            .background(secondaryColor, shape = CircleShape)
+                            .height(20.dp)
+                            .width(20.dp)
+                    )
+                }
+            }
+
+            AnimatedVisibility (
+                visible = showColorPickerPrimary,
+                enter = slideInVertically() + fadeIn(),
+                exit = slideOutVertically() + fadeOut()
+            ) {
+                HsvColorPicker(
+                    initialColor = primaryColor,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(450.dp)
+                        .padding(10.dp),
+                    controller = rememberColorPickerController(),
+                    onColorChanged = { envelope ->
+                        if (primaryInitialized) {
+                        onPrimaryColorChange(envelope.color)
+                        } else {
+                            primaryInitialized = true
+                        }
+                    }
+                )
+            }
+
+            AnimatedVisibility(
+                visible = showColorPickerSecondary,
+                enter = slideInVertically() + fadeIn(),
+                exit = slideOutVertically() + fadeOut()
+            ) {
+                HsvColorPicker(
+                    initialColor = secondaryColor,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(450.dp)
+                        .padding(10.dp),
+                    controller = rememberColorPickerController(),
+                    onColorChanged = { envelope ->
+                        if (secondaryInitialized) {
+                            onSecondaryColorChange(envelope.color)
+                        } else {
+                            secondaryInitialized = true
+                        }
+                    }
+                )
+            }
+        }
     }
 }
