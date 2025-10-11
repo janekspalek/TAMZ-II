@@ -17,6 +17,8 @@ import androidx.compose.ui.unit.dp
 fun SliderCard(
     deposit: Float,
     onDepositChange: (Float) -> Unit,
+    monthlyDeposit: Float,
+    onMonthlyDepositChange: (Float) -> Unit,
     interest: Float,
     onInterestChange: (Float) -> Unit,
     years: Float,
@@ -25,11 +27,20 @@ fun SliderCard(
     ElevatedCard (modifier = Modifier.fillMaxWidth()){
         Column (modifier = Modifier.padding(20.dp)){
             Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
-                Text("Vklad", fontWeight = FontWeight.SemiBold)
+                Text("Počáteční vklad", fontWeight = FontWeight.SemiBold)
                 Text("${deposit.toInt()} Kč")
             }
             Row(modifier = Modifier.fillMaxWidth()){
                 Slider(value = deposit, onValueChange = onDepositChange, valueRange = 10000f..100000f, steps = 8)
+            }
+        }
+        Column (modifier = Modifier.padding(20.dp)){
+            Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
+                Text("Měsíční vklad", fontWeight = FontWeight.SemiBold)
+                Text("${monthlyDeposit.toInt()} Kč")
+            }
+            Row(modifier = Modifier.fillMaxWidth()){
+                Slider(value = monthlyDeposit, onValueChange = onMonthlyDepositChange, valueRange = 500f..10000f, steps = 18)
             }
         }
         Column (modifier = Modifier.padding(20.dp)){

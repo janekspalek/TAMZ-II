@@ -69,12 +69,26 @@ fun App(
     primaryColor: Color,
     secondaryColor: Color
 ) {
-    var deposit by remember { mutableFloatStateOf(1000f) }
+    var deposit by remember { mutableFloatStateOf(10000f) }
     var interest by remember { mutableFloatStateOf(10f) }
     var years by remember { mutableFloatStateOf(5f) }
+    var monthlyDeposit by remember { mutableFloatStateOf(500f) }
 
-    val futureValue = deposit * (1 + interest / 100).pow(years)
-    val interestOnly = futureValue - deposit
+    val r = interest / 100f / 12f
+    val n = years * 12f
+
+    val futureSingleDeposit = deposit * (1 + r).pow(n)
+
+    val futureMonthlyDeposits = if (r != 0f)
+        monthlyDeposit * ((1 + r).pow(n) - 1) / r
+    else
+        monthlyDeposit * n
+
+    val futureValue = futureSingleDeposit + futureMonthlyDeposits
+
+    val totalDeposited = deposit + monthlyDeposit * n
+
+    val interestOnly = futureValue - totalDeposited
 
     val scrollState = rememberScrollState()
 
@@ -96,6 +110,8 @@ fun App(
         SliderCard(
             deposit,
             onDepositChange = {deposit = it.roundToInt().toFloat()},
+            monthlyDeposit,
+            onMonthlyDepositChange = {monthlyDeposit = it.roundToInt().toFloat()},
             interest,
             onInterestChange = {interest = it.roundToInt().toFloat()},
             years,

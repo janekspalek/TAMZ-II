@@ -35,9 +35,12 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(navController = navController, startDestination = "home") {
                     composable ("home") {
-                        HomeScreen(onNavigateToSettings = {
-                            navController.navigate("settings")
-                        }, chartType, primaryColor, secondaryColor)
+                        HomeScreen(
+                            onNavigateToSettings = { navController.navigate("settings") },
+                            chartType,
+                            primaryColor,
+                            secondaryColor
+                        )
                     }
                     composable ("settings") {
                         SettingsScreen(
