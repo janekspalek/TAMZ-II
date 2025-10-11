@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "cv-04"
 include(":app")
- 
