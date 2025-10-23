@@ -1,23 +1,16 @@
-package com.example.cv_05.ui.theme
+package com.example.cv_05
 
-import android.R
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -95,7 +88,7 @@ fun BarCode (
                 drawRect(
                     color = Color.Black,
                     topLeft = Offset(x = index * widthPerBar, y = 0f),
-                    size = androidx.compose.ui.geometry.Size(widthPerBar, height)
+                    size = Size(widthPerBar, height)
                 )
             }
         }
@@ -108,7 +101,7 @@ fun BarCode (
         drawRect(
             color = Color.White,
             topLeft = Offset(x = 0f, y = size.height - 75f),
-            size = androidx.compose.ui.geometry.Size(size.width, 75f)
+            size = Size(size.width, 75f)
         )
 
         for (i in 0 until 12) {
@@ -123,6 +116,5 @@ fun BarCode (
                 topLeft = Offset(x = x - 12f, y = textY)
             )
         }
-
     }
 }
