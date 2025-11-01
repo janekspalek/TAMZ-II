@@ -12,7 +12,7 @@ object LevelRepository {
 
         val levels = mutableListOf<Level>()
         val levelLines = mutableListOf<String>()
-        var levelCounter = 1
+        var levelCounter = 0
 
         try {
             context.assets.open(levelsFilename).bufferedReader().useLines { lines ->

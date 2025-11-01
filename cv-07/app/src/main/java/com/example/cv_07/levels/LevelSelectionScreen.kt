@@ -29,7 +29,8 @@ import com.example.cv_07.data.Level
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LevelSelectionScreen(
-    levels: List<Level>
+    levels: List<Level>,
+    onLevelClick: (Int) -> Unit
 ) {
     val context = LocalContext.current
     val bitmaps = remember(context) {
@@ -70,7 +71,7 @@ fun LevelSelectionScreen(
                     level,
                     bitmaps = bitmaps,
                     onLevelClick = {
-                        println("Kliknuto na: ${level.id}")
+                        onLevelClick(level.id)
                     }
                 )
             }

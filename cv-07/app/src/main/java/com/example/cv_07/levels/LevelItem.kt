@@ -51,7 +51,7 @@ fun LevelItem(
             )
 
             Text(
-                text = "Level " + level.id,
+                text = "Level " + (level.id + 1),
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.titleMedium
             )
