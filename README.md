@@ -17,3 +17,9 @@
 ## Exercise 06
 
 <img src="./cv-06/screenshots/app.png" width="350" alt="App screenshot">
+
+## Exercise 07
+
+<img src="./cv-06/screenshots/app-1.png" width="350" alt="App screenshot">
+
+<img src="./cv-06/screenshots/app-2.png" width="350" alt="App screenshot">
