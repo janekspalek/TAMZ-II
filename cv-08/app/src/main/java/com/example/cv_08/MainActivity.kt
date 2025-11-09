@@ -20,9 +20,6 @@ import com.example.cv_08.forecast.WeatherForecast
 import com.example.cv_08.home.HomeScreen
 import com.example.cv_08.ui.theme.Cv08Theme
 
-// API KEY c0bd78361293b062285d5a7ed470690d
-// https://api.openweathermap.org/data/2.5/forecast?appid=c0bd78361293b062285d5a7ed470690d&q=ostrava
-
 @Composable
 fun getWeatherIcon(iconCode: String): Int {
     return when (iconCode) {
@@ -52,7 +49,7 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        // enableEdgeToEdge()
         setContent {
             Cv08Theme {
                 val navController = rememberNavController();
