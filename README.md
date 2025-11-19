@@ -29,3 +29,9 @@
 <img src="./cv-08/screenshots/app-1.png" width="350" alt="App screenshot">
 
 <img src="./cv-08/screenshots/app-2.png" width="350" alt="App screenshot">
+
+## Exercise 08 v2
+
+<img src="./cv-08/screenshots/app-3.png" width="350" alt="App screenshot">
+
+<img src="./cv-08/screenshots/app-4.png" width="350" alt="App screenshot">
