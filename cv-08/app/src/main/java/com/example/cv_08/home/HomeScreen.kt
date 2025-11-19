@@ -63,7 +63,12 @@ fun HomeScreen(
     onWeatherForecastClick: () -> Unit
 ) {
     var searchText by remember { mutableStateOf("") }
-    var cityToSearch by remember { mutableStateOf("ostrava") }
+    var cityToSearch by remember {
+        val targetCity = DataHolder.selectedCity ?: DataHolder.currentCity
+        DataHolder.selectedCity = null
+        DataHolder.currentCity = targetCity
+        mutableStateOf(targetCity)
+    }
     var isLoading by remember { mutableStateOf(false) }
     var isError by remember { mutableStateOf(false) }
 
@@ -86,6 +91,7 @@ fun HomeScreen(
 
         try {
             data = fetchData(client, cityToSearch)
+            DataHolder.forecastData = data
         }
         catch(e: Exception) {
             isError = true
@@ -138,6 +144,7 @@ fun HomeScreen(
                    onClick = {
                        if(searchText.isNotBlank()) {
                            cityToSearch = searchText
+                           DataHolder.currentCity = searchText
                        }
                    },
                    modifier = Modifier.fillMaxHeight().padding(top = 8.dp),
@@ -179,31 +186,6 @@ fun HomeScreen(
                 CurrentWeather(
                     city = data!!.city,
                     weather = data!!.list.first()
-                )
-            }
-
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Button(
-                onClick = {
-                    DataHolder.forecastData = data
-                    onWeatherForecastClick()
-                },
-                modifier = Modifier.fillMaxWidth().height(55.dp),
-                shape = RoundedCornerShape (
-                    cornerRadius
-                ),
-            ) {
-                Text(
-                    text = "Week forecast",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Icon(
-                    imageVector = Icons.AutoMirrored.Outlined.ArrowForward,
-                    contentDescription = "Search"
                 )
             }
 
