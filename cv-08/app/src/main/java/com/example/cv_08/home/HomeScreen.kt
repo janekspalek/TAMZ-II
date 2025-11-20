@@ -187,6 +187,12 @@ fun HomeScreen(
                     city = data!!.city,
                     weather = data!!.list.first()
                 )
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                ForecastChart(
+                    forecast = data!!
+                )
             }
 
             Spacer(modifier = Modifier.height(30.dp))

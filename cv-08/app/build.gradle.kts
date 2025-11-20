@@ -68,4 +68,6 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:${ktor_version}")
     implementation("io.ktor:ktor-serialization-kotlinx-json:${ktor_version}")
     implementation("io.ktor:ktor-client-content-negotiation:${ktor_version}")
+
+    implementation ("io.github.ehsannarmani:compose-charts:0.1.7")
 }
