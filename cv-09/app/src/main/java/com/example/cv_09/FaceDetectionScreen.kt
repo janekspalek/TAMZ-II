@@ -62,7 +62,6 @@ import com.google.mlkit.vision.face.FaceDetectorOptions
 
 @Composable
 fun FaceDetectionScreen(modifier: Modifier = Modifier) {
-    var resultText by remember { mutableStateOf("Vyber fotku pro analýzu.") }
     var imageBitmap by remember { mutableStateOf<Bitmap?>(null) }
     var facesList by remember { mutableStateOf<List<Face>>(emptyList()) }
 
@@ -93,17 +92,14 @@ fun FaceDetectionScreen(modifier: Modifier = Modifier) {
                         detector.process(image)
                             .addOnSuccessListener { faces ->
                                 facesList = faces
-                                resultText = "Počet nalezených tváří: ${faces.size}"
                             }
                             .addOnFailureListener { e ->
-                                resultText = "Chyba: ${e.message}"
+                                e.printStackTrace()
                             }
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-            } else {
-                Log.d("FaceApp", "No media selected")
             }
         }
     )
@@ -112,8 +108,6 @@ fun FaceDetectionScreen(modifier: Modifier = Modifier) {
         modifier = modifier
             .padding(16.dp)
     ) {
-
-
         if (imageBitmap != null) {
             FaceDetectionCanvas(
                 bitmap = imageBitmap!!,
@@ -165,7 +159,7 @@ fun FaceDetectionScreen(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .height(400.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(Color.LightGray),
+                    .background(Color(0xFFCCCCCC)),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
